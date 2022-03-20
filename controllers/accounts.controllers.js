@@ -1,39 +1,32 @@
-import { Router } from 'express';
 import { Account } from '../database/models';
 
-const router = Router();
+export default {
+createAccount: async (req, res) => {
+        try {
+            const { username, password, email } = req.body;
+    
+            const account = await Account.create({
+                username,
+                password,
+                email
+            });
 
-// Create account
-router.post('/accounts', async (req, res) => {
-    try {
-        const { username, password, email } = req.body;
-  
-        const account = await Account.create({
-            username,
-            password,
-            email
-        });
+            return res.status(201).json({ account });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+},
 
-        return res.status(201).json({ account });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-
-// Get all accounts
-router.get('/accounts', async (req, res) => {
+getAllAccount: async (req, res) => {
     try {
         const accounts = await Account.findAll();
         return res.status(200).json({ accounts });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+},
 
-
-// Get account by id
-router.get('/accounts/:id', async (req, res) => {
+getAccountbyID: async (req, res) => {
     try {
         const account = await Account.findOne({
             where: { id: req.params.id }
@@ -47,11 +40,9 @@ router.get('/accounts/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+},
 
-
-// Update account
-router.patch('/accounts/:id', async (req, res) => {
+updateAccount: async (req, res) => {
     try {
         const { username, password, email } = req.body;
         const accounts = await Account.update(
@@ -71,11 +62,9 @@ router.patch('/accounts/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+},
 
-
-// Delete account
-router.delete('/accounts/:id', async (req, res) => {
+deleteAccount: async (req, res) => {
     try {
         const account = await Account.destroy({ where: { id: req.params.id } });
         if (!account)
@@ -85,6 +74,6 @@ router.delete('/accounts/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+}
 
-export default router;
+}
