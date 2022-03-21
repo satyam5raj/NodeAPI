@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import accountRoutes from './routes/accounts.routes';
+import contactRoutes from './routes/contacts.routes';
 
 
 const app = express();
@@ -8,8 +9,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/accounts', accountRoutes);
+app.use('/contacts', contactRoutes);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.get('/', (req, res) => res.status(200).send({
    message: 'welcome to The Blog API'
