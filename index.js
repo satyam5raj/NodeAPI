@@ -8,8 +8,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/accounts', accountRoutes);
-app.use('/contacts', contactRoutes);
+app.use('/', accountRoutes);
+app.use('/', contactRoutes);
 
 const port = process.env.PORT || 4000;
 
